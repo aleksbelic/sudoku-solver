@@ -1,22 +1,22 @@
-# sudoku-solver
+# Sudoku Solver
 
-Sudoku-solver is a simple, terminal-based app programmed in Python 3. It can be used for both solving and generating sudoku puzzles.
+Sudoku Solver is a straightforward terminal-based app built with `Python 3`. It allows users to both solve Sudoku puzzles and generate new ones.
 
 ### Usage
 
-All examples are located inside **demo.py** file.
+All examples can be found in the **demo.py** file.
 
-### Solving sudoku puzzle
-Solving a puzzle is done using **SudokuSolver** class. Constructor params:
-- **puzzle_grid**, list, puzzle values placed inside a list with **0** in place where puzzle cell is empty, default is [] (empty list)
+### Solving a Sudoku puzzle
 
-Method **solve()** completes the puzzle. It receives 2 params:
-- **timer**, boolean, defines if time should be measured, default is false
-- **sound**, boolean, defines if completion should be followed by a sound, default is true
+Solving a Sudoku puzzle is done using **SudokuSolver** class. Constructor parameter:
+- **puzzle_grid**, list[int], puzzle values placed inside a list with **0** in place where puzzle cell is empty, default is [] (empty list)
+
+Method **solve()** solves the puzzle. It accepts 1 parameter:
+- **timer** - boolean, determines whether time should be measured, default is False
 ```
 sudoku_puzzle = [0,0,5,0,1,0,0,0,0,0,2,0,4,0,0,0,0,1,0,9,0,5,0,0,0,8,0,5,0,8,0,0,0,3,0,0,0,7,2,0,4,0,1,6,0,0,0,6,0,0,0,7,0,2,0,5,0,0,0,1,0,2,0,7,0,0,0,0,8,0,3,0,0,0,0,0,3,0,6,0,0,]
 sudoku_solver = SudokuSolver(sudoku_puzzle)
-sudoku_solver.solve() # timer = False, sound = True
+sudoku_solver.solve() # timer = False
 sudoku_solver.print_grid()
 ```
 Output:
@@ -36,17 +36,16 @@ Done!
  2  8  9 | 7  3  4 | 6  1  5
 ```
 
-### Generating new puzzle
+### Creating a new puzzle
 
-Generating new puzzle is done using **SudokuGenerator** class. Constructor params:
+Generating new puzzle is done using **SudokuGenerator** class. Constructor parameter:
 - **size**, integer, defines grid size, default is 9
 
-Method **generate()** generates new, fully solved puzzle from scratch. It receives 2 params: 
-- **timer**, boolean, defines if time should be measured, default is false
-- **sound**, boolean, defines if completion should be followed by a sound, default is true
+Method **generate()** generates new, fully solved puzzle from scratch. It accepts 1 parameter: 
+- **timer**, boolean, defines if time should be measured, default is False
 ```
 sudoku_example = SudokuGenerator() # size = 9
-sudoku_example.generate() # timer = False, sound = True
+sudoku_example.generate() # timer = False
 sudoku_example.print_grid()
 ```
 Output:
@@ -66,10 +65,11 @@ Done!
  8  7  2 | 6  3  5 | 4  1  9
 ```
 
-### Storing generated puzzles
-Storing new puzzle is done using a **Helper** class. All puzzles are stored in **storage** folder as comma separated values according to their grid size: 4x4 to 4x4.csv file, 9x9 to 9x9.csv etc. Only unique grids will be stored, duplicates will be ignored.
+### Saving generated puzzles
+
+New puzzles are stored using the **SudokuHelper** class. Puzzles are saved in the **sudoku-puzzles** folder as comma-separated values (CSV) based on their grid size: 4x4 puzzles are saved to `4x4.csv`, 9x9 to `9x9.csv` etc. Only unique grids are stored, with duplicates automatically ignored.
 ```
-sudoku_example = SudokuGenerator() # size = 9, timer = False, sound = True
+sudoku_example = SudokuGenerator() # size = 9, timer = False
 sudoku_example.generate()
 Helper.store(sudoku_example) # storing grid to file ./storage/9x9.csv
 ```

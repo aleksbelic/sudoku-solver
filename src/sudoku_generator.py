@@ -1,7 +1,8 @@
-import math, time, winsound
-from sudoku import Sudoku, Helper
+import math, time
+from .sudoku_puzzle import SudokuPuzzle
+from .sudoku_helper import SudokuHelper
 
-class SudokuGenerator(Sudoku):
+class SudokuGenerator(SudokuPuzzle):
     """SudokuGenerator class."""
     def __init__(self, size = 9):
         sqrtSize = math.sqrt(size)
@@ -15,7 +16,7 @@ class SudokuGenerator(Sudoku):
             for _ in range(self.size):
                 self.grid[row_index].append(dict(
                     value = "_",
-                    candidates = Helper.get_rand_unique_list(1, self.size),
+                    candidates = SudokuHelper.get_rand_unique_int_list(1, self.size),
                 ))
     
     def check_candidate(self, candidate_row_index, candidate_column_index, candidate):
@@ -54,7 +55,7 @@ class SudokuGenerator(Sudoku):
                 try:
                     candidate = self.grid[row_index][column_index]["candidates"][0]
                 except IndexError: # candidates list is empty
-                    self.grid[row_index][column_index]["candidates"] = Helper.get_rand_unique_list(1, self.size)
+                    self.grid[row_index][column_index]["candidates"] = SudokuHelper.get_rand_unique_int_list(1, self.size)
                     self.grid[row_index][column_index]["value"] = "_"
                     if column_index != 0:
                         column_index -= 1
@@ -77,5 +78,3 @@ class SudokuGenerator(Sudoku):
         print("Done!")
         if timer:
             print("Grid generated in %s sec" % (time.time() - start_time))
-        if sound:
-            winsound.Beep(500, 100)

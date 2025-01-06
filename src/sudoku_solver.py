@@ -1,14 +1,16 @@
-import math, time, winsound
-from sudoku import Sudoku, Helper
+import math, time
+from .sudoku_puzzle import SudokuPuzzle
+from .sudoku_helper import SudokuHelper
 
-class SudokuSolver(Sudoku):
+class SudokuSolver(SudokuPuzzle):
     """SudokuSolver class."""
+
     def __init__(self, puzzle_grid = []):
         sqrtPuzzleGridLen = math.sqrt(len(puzzle_grid))
         if (sqrtPuzzleGridLen).is_integer():
             self.size = int(sqrtPuzzleGridLen)
         else:
-            exit("ERROR: incorrect paramater!\nSquare root of grid size should be an integer and square root of " + str(len(puzzle_grid)) + " is " + str(sqrtPuzzleGridLen) + ".")
+            exit("ERROR: incorrect parameter!\nSquare root of grid size should be an integer and square root of " + str(len(puzzle_grid)) + " is " + str(sqrtPuzzleGridLen) + ".")
         self.grid = []
         puzzle_grid_counter = 0
         for row_index in range(self.size):
@@ -70,7 +72,7 @@ class SudokuSolver(Sudoku):
                     try:
                         candidate = self.grid[row_index][column_index]["candidates"][0]
                     except IndexError: # candidates list is empty
-                        self.grid[row_index][column_index]["candidates"] = Helper.get_rand_unique_list(1, self.size)
+                        self.grid[row_index][column_index]["candidates"] = SudokuHelper.get_rand_unique_int_list(1, self.size)
                         self.grid[row_index][column_index]["value"] = "_"
                         while True:
                             if column_index != 0:
@@ -101,5 +103,4 @@ class SudokuSolver(Sudoku):
         print("Done!")
         if timer:
             print("Grid generated in %s sec" % (time.time() - start_time))
-        if sound:
-            winsound.Beep(500, 100)
+

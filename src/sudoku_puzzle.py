@@ -1,8 +1,9 @@
-import random, math
-from helper import Helper
+import math
+from .sudoku_helper import SudokuHelper
 
-class Sudoku:
-    """Sudoku class."""
+class SudokuPuzzle:
+    """SudokuPuzzle class."""
+    
     def __init__(self, size):
         self.size = size
         self.grid = []
@@ -17,7 +18,7 @@ class Sudoku:
 
     def generate_cell_candidates(self, cell_row_index, cell_column_index):
         """Generates candidate list for specific cell."""
-        candidates_to_validate = Helper.get_rand_unique_list(1, self.size)
+        candidates_to_validate = SudokuHelper.get_rand_unique_int_list(1, self.size)
         valid_candidates = []
         for candidate in candidates_to_validate:
             if self.check_candidate(cell_row_index, cell_column_index, candidate):

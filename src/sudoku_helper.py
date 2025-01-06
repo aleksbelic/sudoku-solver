@@ -1,23 +1,18 @@
 import random, csv
 
-class Helper:
-    """Helper class. Used for additional sudoku methods."""
+class SudokuHelper:
+    """SudokuHelper class. Used for additional Sudoku methods."""
 
     @staticmethod
-    def get_rand_num(min, max):
-        """Returns random integer between min & max (both values included)."""
-        return random.randint(min, max)
-
-    @staticmethod
-    def get_rand_unique_list(min, max):
-        """Returns random list of unique integers between min & max (both values included)."""
-        return random.sample(range(min,max + 1), max - min + 1)
+    def get_rand_unique_int_list(min, max):
+        """Returns list of random, unique integers between min & max (inclusive)."""
+        return random.sample(range(min, max + 1), max - min + 1)
 
     @staticmethod
     def store(sudoku):
         """Stores generated grid to appropriate CSV file. No duplicates will be added."""
         csv_file_name = str(sudoku.size) + "x" + str(sudoku.size) + ".csv"
-        csv_file_path = "storage/" + csv_file_name
+        csv_file_path = "sudoku-puzzles/" + csv_file_name
         try:
             with open(csv_file_path, "r", newline="") as csv_file:
                 csv_file_reader = csv.reader(csv_file)
@@ -30,13 +25,13 @@ class Helper:
                 for grid in grid_list:
                     csv_file_writer.writerow(grid)
         except FileNotFoundError:
-            exit("ERROR: sudoku could not be stored, file \"" + csv_file_path + "\" was not found.")
+            exit("ERROR: Sudoku puzzle could not be stored, file \"" + csv_file_path + "\" was not found.")
 
     @staticmethod
     def remove_duplicates_from_storage(csv_file_name):
         """Removes all duplicates from storage file."""
         duplicate_counter = 0
-        csv_file_path = "storage/" + csv_file_name
+        csv_file_path = "sudoku-puzzles/" + csv_file_name
         try:
             with open(csv_file_path, "r", newline="") as csv_file:
                 csv_file_reader = csv.reader(csv_file)
@@ -59,4 +54,4 @@ class Helper:
                 print("No duplicates found.")
 
         except FileNotFoundError:
-            exit("ERROR: sudoku could not be stored, file \"" + csv_file_path + "\" was not found.")
+            exit("ERROR: Sudoku puzzle could not be stored, file \"" + csv_file_path + "\" was not found.")
