@@ -5,12 +5,16 @@ from .sudoku_helper import SudokuHelper
 class SudokuSolver(SudokuPuzzle):
     """SudokuSolver class."""
 
-    def __init__(self, puzzle_grid = []):
-        sqrtPuzzleGridLen = math.sqrt(len(puzzle_grid))
-        if (sqrtPuzzleGridLen).is_integer():
-            self.size = int(sqrtPuzzleGridLen)
-        else:
-            exit("ERROR: incorrect parameter!\nSquare root of grid size should be an integer and square root of " + str(len(puzzle_grid)) + " is " + str(sqrtPuzzleGridLen) + ".")
+    def __init__(self, puzzle_grid: list[int] = []):
+
+        puzzle_grid_size = math.sqrt(len(puzzle_grid))
+        if not puzzle_grid_size.is_integer():
+            raise ValueError(
+                "Square root of the number of cells in the grid should be an integer. "
+                f"The square root of {len(puzzle_grid)} is {puzzle_grid_size}."
+            )
+        
+        self.size = int(puzzle_grid_size)
         self.grid = []
         puzzle_grid_counter = 0
         for row_index in range(self.size):
@@ -72,7 +76,7 @@ class SudokuSolver(SudokuPuzzle):
                     try:
                         candidate = self.grid[row_index][column_index]["candidates"][0]
                     except IndexError: # candidates list is empty
-                        self.grid[row_index][column_index]["candidates"] = SudokuHelper.get_rand_unique_int_list(1, self.size)
+                        self.grid[row_index][column_index]["candidates"] = SudokuHelper.get_shuffled_range(1, self.size)
                         self.grid[row_index][column_index]["value"] = "_"
                         while True:
                             if column_index != 0:

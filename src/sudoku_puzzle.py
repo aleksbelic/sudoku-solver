@@ -2,11 +2,17 @@ import math
 from .sudoku_helper import SudokuHelper
 
 class SudokuPuzzle:
-    """SudokuPuzzle class."""
+    """
+    SudokuPuzzle class.
     
-    def __init__(self, size):
+    Attributes:
+        size (int): The size of the sudoku puzzle grid.
+        grid (list[int]): The grid of the sudoku puzzle.
+    """
+    
+    def __init__(self, size: int = 9):
         self.size = size
-        self.grid = []
+        self.grid: list[int] = []
 
     def grid_values_to_list(self):
         """Generates list with grid values."""
@@ -18,7 +24,7 @@ class SudokuPuzzle:
 
     def generate_cell_candidates(self, cell_row_index, cell_column_index):
         """Generates candidate list for specific cell."""
-        candidates_to_validate = SudokuHelper.get_rand_unique_int_list(1, self.size)
+        candidates_to_validate = SudokuHelper.get_shuffled_range(1, self.size)
         valid_candidates = []
         for candidate in candidates_to_validate:
             if self.check_candidate(cell_row_index, cell_column_index, candidate):
